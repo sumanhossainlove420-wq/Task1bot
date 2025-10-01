@@ -59,7 +59,7 @@
 
         @keyframes pulse { 0% { box-shadow: 0 0 0 0 var(--primary-glow); } 70% { box-shadow: 0 0 0 10px rgba(0, 137, 123, 0); } 100% { box-shadow: 0 0 0 0 rgba(0, 137, 123, 0); } }
         .action-button {
-            display: flex; align-items: center; justify-content: center; gap: 12px; width: 100%; padding: 18px; border: none; border-radius: 16px; background-color: var(--primary-color); color: white; font-size: 18px; font-weight: 700;
+            display: flex; align-items: center; justify-content: center; gap: 12px; width: 100%; padding: 18px; border: none;border-radius: 16px; background-color: var(--primary-color); color: white; font-size: 18px; font-weight: 700;
             cursor: pointer; transition: all 0.2s ease;
         }
         .action-button.pulsing { animation: pulse 2s infinite; }
@@ -117,3 +117,263 @@
             <div id="profile-pic"><i class="fa-solid fa-user"></i></div>
             <h1 id="greeting">স্বাগতম!</h1>
         </div>
+<div class="balance-card">
+            <h2>BDT EARN</h2>
+            <h3>আপনার মোট আয়</h3>
+            <div class="amount" id="total-earning">0.00 ৳</div>
+        </div>
+
+        <div class="stats-grid">
+            <div class="stat-item">
+                <div class="icon"><i class="fa-solid fa-rectangle-ad"></i></div>
+                <div class="value" id="ad-count">0</div>
+                <div class="label">মোট বিজ্ঞাপন</div>
+            </div>
+            <div class="stat-item">
+                <div class="icon"><i class="fa-solid fa-calendar-day"></i></div>
+                <div class="value" id="ads-today-count">0 / 10</div>
+                <div class="label">আজকের দেখা</div>
+            </div>
+        </div>
+
+        <div class="card">
+            <h3 class="card-title">আজকের কাজ</h3>
+            <button class="action-button" id="watch-ad-button" onclick="watchAd()">
+                <i class="fa-solid fa-play"></i>
+                <span>বিজ্ঞাপন দেখুন</span>
+            </button>
+        </div>
+
+        <div class="card">
+            <h3 class="card-title">সাপ্তাহিক কার্যকলাপ</h3>
+            <div class="chart-container">
+                <canvas id="activityChart"></canvas>
+            </div>
+        </div>
+    </div>
+
+    <div class="nav-bar">
+        <button class="nav-button" onclick="showModal('withdrawModal')">
+            <i class="fa-solid fa-money-bill-transfer"></i>
+            <span>টাকা তুলুন</span>
+        </button>
+        <button class="nav-button" onclick="showModal('developerModal')">
+            <i class="fa-solid fa-code"></i>
+            <span>ডেভেলপার</span>
+        </button>
+    </div>
+    
+
+    <div id="withdrawModal" class="modal"> <div class="modal-content"> <span class="close-button" onclick="closeModal('withdrawModal')">&times;</span> <h3 class="card-title">টাকা উত্তোলন</h3> <p>ন্যূনতম উত্তোলন ১০০ ৳।</p> <form id="withdraw-form"> <select id="method" name="method" required> <option value="" disabled selected>পেমেন্ট মাধ্যম বাছাই করুন</option> <option value="বিকাশ">বিকাশ</option> <option value="নগদ">নগদ</option> <option value="রকেট">রকেট</option> </select> <input type="tel" id="account-number" placeholder="অ্যাকাউন্ট নম্বর" required> <input type="number" id="withdraw-amount" placeholder="টাকার পরিমাণ" required> <button type="submit" class="action-button" id="withdraw-submit-button"> <span class="button-text">সাবমিট করুন</span> <div class="spinner" style="display: none;"></div> </button> </form> </div> </div>
+   
+
+
+
+
+<div id="developerModal" class="modal">
+  <div class="modal-content">
+    <span class="close-button" onclick="closeModal('developerModal')">&times;</span>
+    
+    <h3 class="card-title">
+      <img src="https://cdn-icons-png.flaticon.com/512/1055/1055687.png" 
+           alt="Developer Icon" 
+           style="width:24px;height:24px;vertical-align:middle;margin-right:8px;">
+      ডেভেলপার তথ্য
+    </h3>
+    
+    <p>এই টেলিগ্রাম মিনি অ্যাপটি তৈরি করেছেন <strong>MD AL AZIM</strong>।</p>
+    <p>আমি একজন ওয়েব ও বট ডেভলপার।  
+    যদি কেউ <strong>নিজস্ব টেলিগ্রাম বট বা অ্যাপ কিনতে চান</strong>, তাহলে আমার সাথে যোগাযোগ করুন।</p>
+
+    <h4>📞 যোগাযোগ:</h4>
+    <div class="social-links">
+      <a href="https://t.me/mdalazim1" target="_blank" class="social-item">
+        <img src="https://cdn-icons-png.flaticon.com/512/2111/2111646.png" alt="Telegram" />
+        <span>Telegram</span>
+      </a>
+      
+      <a href="https://facebook.com/mdalazim0" target="_blank" class="social-item">
+        <img src="https://cdn-icons-png.flaticon.com/512/733/733547.png" alt="Facebook" />
+        <span>Facebook</span>
+      </a>
+    </div>
+  </div>
+</div>
+
+<style>
+  .social-links {
+    display: flex;
+    gap: 15px;
+    margin-top: 10px;
+    flex-wrap: wrap;
+  }
+  .social-item {
+    text-decoration: none;display: flex;
+    flex-direction: column;
+    align-items: center;
+    width: 70px;
+  }
+  .social-item img {
+    width: 32px;
+    height: 32px;
+    margin-bottom: 5px;
+    transition: transform 0.2s ease-in-out;
+  }
+  .social-item span {
+    font-size: 14px;
+    color: #333;
+  }
+  .social-item:hover img {
+    transform: scale(1.2);
+  }
+</style>
+  
+
+
+
+
+  <div id="toast"></div>
+
+    <script>
+        // --- CONFIGURATION ---
+        const BOT_TOKEN = 'বট_টোকেন';
+        const CHAT_ID = '5187944932';
+        const AD_REWARD = 10;
+        const DAILY_AD_LIMIT = 100;
+        const MINIMUM_WITHDRAWAL = 50;
+
+        // --- STATE & TELEGRAM INIT ---
+        let state = { totalEarning: 0.00, adCount: 0, adsWatchedToday: 0, lastAdWatchedDate: null, weeklyActivity: [0, 0, 0, 0, 0, 0, 0] };
+        const tg = window.Telegram.WebApp;
+        tg.ready();
+        tg.expand();
+
+        // --- DOM ELEMENTS ---
+        const totalEarningEl = document.getElementById('total-earning');
+        const adCountEl = document.getElementById('ad-count');
+        const adsTodayCountEl = document.getElementById('ads-today-count');
+        const watchAdButton = document.getElementById('watch-ad-button');
+        const withdrawForm = document.getElementById('withdraw-form');
+        const adLoaderOverlay = document.getElementById('ad-loader-overlay');
+        const profilePicEl = document.getElementById('profile-pic');
+        const greetingEl = document.getElementById('greeting');
+
+        // --- UI & STATE FUNCTIONS ---
+        function updateUI() {
+            totalEarningEl.textContent = ${state.totalEarning.toFixed(2)} ৳;
+            adCountEl.textContent = state.adCount;
+            adsTodayCountEl.textContent = ${state.adsWatchedToday} / ${DAILY_AD_LIMIT};
+            watchAdButton.disabled = state.adsWatchedToday >= DAILY_AD_LIMIT;
+            watchAdButton.querySelector('span').textContent = state.adsWatchedToday >= DAILY_AD_LIMIT ? 'আজকের সীমা শেষ' : 'বিজ্ঞাপন দেখুন';
+            if (watchAdButton.disabled) { watchAdButton.classList.remove('pulsing'); } else { watchAdButton.classList.add('pulsing'); }
+            updateChart();
+        }
+
+        function watchAd() {
+            if (state.adsWatchedToday >= DAILY_AD_LIMIT) {
+                showToast('আপনি আজকের সব বিজ্ঞাপন দেখে ফেলেছেন।', 'error');
+                return;
+            }
+            adLoaderOverlay.style.display = 'flex';
+            window.showGiga()
+                .then(() => {
+                    state.totalEarning += AD_REWARD;
+                    state.adCount += 1;
+                    state.adsWatchedToday += 1;
+                    const todayIndex = (new Date().getDay() + 1) % 7;
+                    state.weeklyActivity[todayIndex] += 1;
+                    saveState();
+                    updateUI();
+                    showToast(+${AD_REWARD.toFixed(2)} ৳ আয় করেছেন!, 'success');
+                    tg.HapticFeedback.notificationOccurred('success');
+                })
+                .catch(e => {
+                    console.error("Giga Pub Ad Error:", e);
+                    showToast('বিজ্ঞাপনটি সম্পন্ন হয়নি। আবার চেষ্টা করুন।', 'error');
+                })
+                .finally(() => {
+                    adLoaderOverlay.style.display = 'none';
+                    updateUI();
+                });
+        }
+
+        async function handleWithdrawal(event) {
+            event.preventDefault();
+            const submitButton = document.getElementById('withdraw-submit-button'), buttonText = submitButton.querySelector('.button-text'), spinner = submitButton.querySelector('.spinner');
+            const method = document.getElementById('method').value, accountNumber = document.getElementById('account-number').value, amount = parseFloat(document.getElementById('withdraw-amount').value);const user = tg.initDataUnsafe?.user;
+            if (!method) return showToast('অনুগ্রহ করে পেমেন্ট মাধ্যম বাছাই করুন।', 'error');
+            if (amount < MINIMUM_WITHDRAWAL) return showToast(ন্যূনতম ${MINIMUM_WITHDRAWAL} ৳ উত্তোলন করা যাবে।, 'error');
+            if (amount > state.totalEarning) return showToast('আপনার অ্যাকাউন্টে পর্যাপ্ত ব্যালেন্স নেই।', 'error');
+
+            buttonText.style.display = 'none'; spinner.style.display = 'block'; submitButton.disabled = true;
+            let message = <b>💰 নতুন টাকা উত্তোলনের অনুরোধ 💰</b>\n\n👤 <b>ব্যবহারকারী:</b> ${user?.first_name || ''} ${user?.last_name || ''} (@${user?.username || 'N/A'})\n🆔 <b>User ID:</b> <code>${user?.id}</code>\n---------------------------------------\n💳 <b>মাধ্যম:</b> ${method}\n🔢 <b>নম্বর:</b> <code>${accountNumber}</code>\n💵 <b>পরিমাণ:</b> ${amount.toFixed(2)} ৳;
+            const url = https://api.telegram.org/bot${BOT_TOKEN}/sendMessage;
+            try {
+                const response = await fetch(url, { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify({ chat_id: CHAT_ID, text: message, parse_mode: 'HTML' }) });
+                const result = await response.json();
+                if (result.ok) {
+                    state.totalEarning -= amount;
+                    saveState(); updateUI(); closeModal('withdrawModal');
+                    showToast('আপনার অনুরোধ সফলভাবে পাঠানো হয়েছে।', 'success');
+                    tg.HapticFeedback.notificationOccurred('success');
+                } else { showToast(ত্রুটি: ${result.description}, 'error'); }
+            } catch (error) { showToast('অনুরোধ পাঠাতে সমস্যা হয়েছে।', 'error'); } 
+            finally { buttonText.style.display = 'inline'; spinner.style.display = 'none'; submitButton.disabled = false; }
+        }
+
+        function showModal(modalId) { document.getElementById(modalId).style.display = 'flex'; }
+        function closeModal(modalId) { document.getElementById(modalId).style.display = 'none'; }
+        function showToast(message, type = 'success') {
+            const toast = document.getElementById('toast');
+            toast.textContent = message; toast.className = show ${type};
+            setTimeout(() => { toast.className = toast.className.replace('show', ''); }, 3000);
+        }
+
+        let myChart;
+        function updateChart() {
+            const ctx = document.getElementById('activityChart').getContext('2d');
+            if (myChart) myChart.destroy();
+            myChart = new Chart(ctx, {
+                type: 'bar',
+                data: {
+                    labels: ['শনি', 'রবি', 'সোম', 'মঙ্গল', 'বুধ', 'বৃহঃ', 'শুক্র'],
+                    datasets: [{
+                        label: 'বিজ্ঞাপন', data: state.weeklyActivity, backgroundColor: 'rgba(0, 137, 123, 0.1)',
+                        borderColor: 'rgba(0, 137, 123, 1)', borderWidth: 2, borderRadius: 8,
+                        hoverBackgroundColor: 'rgba(0, 137, 123, 0.2)'
+                    }]
+                },
+                options: {
+                    scales: { y: { beginAtZero: true, ticks: { stepSize: 1 } } },
+                    plugins: { legend: { display: false } },
+                    responsive: true, maintainAspectRatio: false
+                }
+            });
+        }
+        
+        function saveState() { localStorage.setItem('gigaPubProState', JSON.stringify(state)); }
+        function loadState() {
+            const savedState = localStorage.getItem('gigaPubProState');
+            if (savedState) state = JSON.parse(savedState);
+            const today = new Date().toLocaleDateString();
+            if (state.lastAdWatchedDate !== today) {
+                state.adsWatchedToday = 0;
+                state.lastAdWatchedDate = today;
+                saveState();
+            }
+        }function initApp() {
+            loadState();
+            const user = tg.initDataUnsafe?.user;
+            if (user?.first_name) {
+                greetingEl.textContent = স্বাগতম, ${user.first_name}!;
+                profilePicEl.innerHTML = <span>${user.first_name.charAt(0)}</span>;
+            }
+            updateUI();
+            withdrawForm.addEventListener('submit', handleWithdrawal);
+            window.onclick = (event) => { if (event.target.classList.contains('modal')) closeModal(event.target.id); }
+        }
+
+        window.addEventListener('load', initApp);
+    </script>
+</body>
+</html>
